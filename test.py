@@ -1,21 +1,27 @@
 import requests
+import json
+from requests.auth import HTTPBasicAuth
+import urllib3
+
+
+
 
 def main():
 
-name = 'student'
+    username = 'student'
+    pawd =  'Cisco123'
+    url =  'https://192.168.0.229/api/tokenservices'
+    headers = {'Connection':  'Close',  'Content-type': 'application/json', 'User-Agent':  'REST API Agent'}
+ 
+    urllib3.disable_warnings()
 
-pawd =  'Cisco123'
+    response = requests.post(url=url, headers=headers, auth=HTTPBasicAuth(username, pawd), verify=False)
 
-url =  'https://192.168.0.229/doc'
-headers = {'Connection':  'Close',  'User-Agent':  'REST API Agent'}
-data = {'msid': phone, 'message': mess, 'naming': name, 'login': user, 'password': pamd5} 
-
-response = requests.post(url=url, data=data, headers=headers)
-
-if response:
-    print( 'Success!')
-else:
-    print( 'An error has occurred.')
+    if response:
+        jsonResp = response.json()
+        print (jsonResp)
+    else:
+        print( 'An error has occurred.')
 
 
 if __name__ == '__main__':
