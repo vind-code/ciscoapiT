@@ -32,15 +32,29 @@ def close_auth(xToken):
         print('Failed to destroy token.\n')
         raise SystemExit
 
+def get_int_counts(int_name,xToken):
+    '''
+    Get interface monitoring info
+    '''
+    headers = {'Content-type': 'application/json', 'User-Agent': 'REST API Agent', 'X-Auth-Token': xToken}
+    try:
+        resp = requests.get(url = base_url + 'monitoring/device/interfaces/' + int_name, headers = headers, verify=False)
+        return resp.content
+    except(ConnectionError): # Not good
+        print('Failed to destroy token.\n')
+        raise SystemExit
 
 def main():
  
     urllib3.disable_warnings()
 
     Auth_Token = init_auth()
-    print(Auth_Token)
+    ### print(Auth_Token)
+    mon_data = get_int_counts('inside',Auth_Token)
+    mon_dict = json.loads(mon_data)
+    print(mon_dict['inputByteCount'])
+    print(mon_dict['outputByteCount'])
     close_auth(Auth_Token)
-
 
 if __name__ == '__main__':
     main()
