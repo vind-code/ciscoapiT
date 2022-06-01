@@ -52,8 +52,8 @@ def main():
     ### print(Auth_Token)
     mon_data = get_int_counts('inside',Auth_Token)
     mon_dict = json.loads(mon_data)
-    print(mon_dict['inputByteCount'])
-    print(mon_dict['outputByteCount'])
+    print('Input Byte Count: ', mon_dict['inputByteCount'])
+    print('Output Byte Count: ', mon_dict['outputByteCount'])
     close_auth(Auth_Token)
 
 if __name__ == '__main__':
