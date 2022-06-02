@@ -6,9 +6,8 @@ import urllib3
 
 username = 'student'
 pawd = 'Cisco123'
-base_url = 'https://192.168.0.229/api/'
 
-def init_auth():
+def init_auth(base_url):
     '''
     Base Auth and return device token
     '''
@@ -20,7 +19,7 @@ def init_auth():
         print('Failed to connect and authenticate to device. Check reachability, DNS, and/or username and password.\n')
         raise SystemExit
 
-def close_auth(xToken):
+def close_auth(base_url,xToken):
     '''
     Destroy Token, return 0 if unsuccessful
     '''
@@ -32,7 +31,7 @@ def close_auth(xToken):
         print('Failed to destroy token.\n')
         raise SystemExit
 
-def get_int_counts(int_name,xToken):
+def get_int_counts(base_url,int_name,xToken):
     '''
     Get interface monitoring info
     '''
@@ -46,15 +45,20 @@ def get_int_counts(int_name,xToken):
 
 def main():
  
+
+    base_url='https://192.168.0.229/api/'
+
+
     urllib3.disable_warnings()
 
-    Auth_Token = init_auth()
+
+    Auth_Token = init_auth(base_url)
     ### print(Auth_Token)
-    mon_data = get_int_counts('inside',Auth_Token)
+    mon_data = get_int_counts(base_url,'inside',Auth_Token)
     mon_dict = json.loads(mon_data)
     print(mon_dict['inputByteCount'])
     print(mon_dict['outputByteCount'])
-    close_auth(Auth_Token)
+    close_auth(base_url,Auth_Token)
 
 if __name__ == '__main__':
     main()
