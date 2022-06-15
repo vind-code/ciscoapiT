@@ -47,6 +47,7 @@ class asa:
     def _get_s(self, api_uri):
         """
         Universal GET function. api 'tale' must be supplied - /api/...
+        Return response content as json-formatted data
         """
         url = 'https://{}{}'.format(self.ip, api_uri)
         headers = {'Content-type': 'application/json', 'User-Agent': 'REST API Agent', 'X-Auth-Token': self.token} 
@@ -61,6 +62,7 @@ class asa:
     def get_int_info(self,int_name):
         """
         Get interface monitoring info. Correct interface name like 'inside' must be supplied
+        Call _get_s() function, return interface info as json-formatted data
         """
         try:
             return self._get_s('/api/monitoring/device/interfaces/{}'.format(int_name))
